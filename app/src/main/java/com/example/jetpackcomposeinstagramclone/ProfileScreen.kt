@@ -7,15 +7,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,10 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,12 +44,22 @@ fun ProfileScreen() {
         TopBar(name = "shubhambhama", modifier = Modifier.padding(top = 16.dp))
         Spacer(modifier = Modifier.height(12.dp))
         ProfileSection()
+        Spacer(modifier = Modifier.height(8.dp))
         ProfileDescription(displayName = "Shubham Bhama",
                 description = "• Founder of \uD835\uDE82\uD835\uDE91\uD835\uDE9E\uD835\uDE8B\uD835\uDE91 \uD835\uDE7C\uD835\uDE92\uD835\uDE95\uD835\uDE8A\uD835\uDE97\n" +
                         "• Engineer at Paytm \uD83D\uDC68\u200D\uD83D\uDCBB • Professional Trader \uD83E\uDDAC\n" +
                         "• The Developer of HPCL Projects\n" +
                         "• My everything, my wife @snehabhama ❤️",
                 url = "https://medium.com/@shubhambhama", followedBy = listOf("snehabhama", "prernabhama"), otherCount = 17)
+        Spacer(modifier = Modifier.height(25.dp))
+        ButtonSection(Modifier.fillMaxWidth())
+        Spacer(modifier = Modifier.height(25.dp))
+        HighlightSection(highlights = listOf(
+                StoryHighlight(painterResource(id = R.drawable.youtube), "YouTube"),
+                StoryHighlight(painterResource(id = R.drawable.qa), "Q&A"),
+                StoryHighlight(painterResource(id = R.drawable.discord), "Discord"),
+                StoryHighlight(painterResource(id = R.drawable.telegram), "Telegram"),
+        ), modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp))
     }
 }
 
@@ -139,6 +155,49 @@ fun ProfileDescription(displayName: String, description: String, url: String, fo
                     append("$otherCount others")
                 }
             }, letterSpacing = letterSpacing, lineHeight = lineHeight, fontSize = 15.sp)
+        }
+    }
+}
+
+@Composable
+fun ButtonSection(modifier: Modifier = Modifier) {
+    val minWidth = 95.dp
+    val height = 36.dp
+    Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = modifier) {
+        ActionButton(text = "Following", icon = Icons.Default.KeyboardArrowDown, modifier = Modifier
+                .defaultMinSize(minWidth = minWidth)
+                .height(height))
+        ActionButton(text = "Message", modifier = Modifier
+                .defaultMinSize(minWidth = minWidth)
+                .height(height))
+        ActionButton(text = "Email", modifier = Modifier
+                .defaultMinSize(minWidth = minWidth)
+                .height(height))
+        ActionButton(icon = Icons.Default.KeyboardArrowDown, modifier = Modifier
+                .size(height))
+    }
+}
+
+@Composable
+fun ActionButton(modifier: Modifier = Modifier, text: String? = null, icon: ImageVector? = null) {
+    Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically, modifier = modifier
+            .border(width = 1.dp, color = Color.LightGray,
+                    shape = RoundedCornerShape(6.dp))
+            .padding(6.dp)) {
+        text?.let { Text(text = text, fontWeight = FontWeight.SemiBold, fontSize = 14.sp) }
+        icon?.let { Icon(imageVector = icon, contentDescription = null, tint = Color.Black) }
+    }
+}
+
+@Composable
+fun HighlightSection(modifier: Modifier = Modifier, highlights: List<StoryHighlight>) {
+    LazyRow(modifier = modifier) {
+        items(highlights.size) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(end = 15.dp)) {
+                RoundImage(image = highlights[it].image, modifier = Modifier.size(70.dp))
+                Text(text = highlights[it].name, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
+            }
         }
     }
 }
