@@ -1,4 +1,4 @@
-package com.example.jetpackcomposeinstagramclone
+package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -47,6 +47,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcomposeinstagramclone.R
+import com.example.jetpackcomposeinstagramclone.model.ImageWithText
 
 @Composable
 fun ProfileScreen() {
@@ -84,7 +86,7 @@ fun ProfileScreen() {
         PostTabView(imageWithText = listOf(
                 ImageWithText(painterResource(id = R.drawable.ic_grid), "Post"),
                 ImageWithText(painterResource(id = R.drawable.ic_reels), "Reels"),
-                ImageWithText(painterResource(id = R.drawable.ic_igtv), "IGTV"),
+                ImageWithText(painterResource(id = R.drawable.ic_igtv_), "IGTV"),
                 ImageWithText(painterResource(id = R.drawable.profile), "Profile"),
             )
         ) {

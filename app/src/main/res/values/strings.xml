@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Instagram Clone</string>
+
+    <!-- Bottom Navigation -->
+    <string name="_home">Home</string>
+    <string name="_search">Search</string>
+    <string name="_add_post">Add Post</string>
+    <string name="_igtv">IGTV</string>
+    <string name="_profile">Profile</string>
 </resources>
