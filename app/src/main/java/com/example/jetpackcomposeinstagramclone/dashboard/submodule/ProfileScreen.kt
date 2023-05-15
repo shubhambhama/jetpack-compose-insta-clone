@@ -1,9 +1,9 @@
 package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,10 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -34,16 +32,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -53,18 +46,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeinstagramclone.R
 import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
+import com.example.jetpackcomposeinstagramclone.ui.theme.backgroundColor
+import com.example.jetpackcomposeinstagramclone.ui.theme.textIconsTint
 import com.example.jetpackcomposeinstagramclone.util.HighlightSection
 import com.example.jetpackcomposeinstagramclone.util.RoundImage
 import com.example.jetpackcomposeinstagramclone.util.rememberPainter
 import com.example.jetpackcomposeinstagramclone.util.rememberRandomColor
-import kotlin.random.Random
 
 @Composable
 fun ProfileScreen() {
     var selectedTabIndex by remember {
         mutableStateOf(0)
     }
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColor())
+    ) {
         TopBar(name = "shubhambhama", modifier = Modifier.padding(top = 16.dp))
         Spacer(modifier = Modifier.height(12.dp))
         ProfileSection()
@@ -73,14 +71,12 @@ fun ProfileScreen() {
             displayName = "Shubham Bhama",
             description = "• Founder of \uD835\uDE82\uD835\uDE91\uD835\uDE9E\uD835\uDE8B\uD835\uDE91 \uD835\uDE7C\uD835\uDE92\uD835\uDE95\uD835\uDE8A\uD835\uDE97\n" +
                     "• Engineer at Paytm \uD83D\uDC68\u200D\uD83D\uDCBB • Professional Trader \uD83E\uDDAC\n" +
-                    "• The Developer of HPCL Projects\n" +
-                    "• My everything, my wife @snehabhama ❤️",
-            url = "https://medium.com/@shubhambhama", followedBy = listOf("snehabhama", "prernabhama"), otherCount = 17
+                    "• The Developer of HPCL Projects\n",
+            url = "https://medium.com/@shubhambhama", followedBy = listOf("instagram", "android"), otherCount = 17
         )
         Spacer(modifier = Modifier.height(25.dp))
         ButtonSection(Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(25.dp))
-
         HighlightSection(
             highlights = listOf(
                 HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 1"),
@@ -123,10 +119,20 @@ fun TopBar(name: String, modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceAround,
             modifier = modifier.fillMaxWidth()
     ) {
-        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.Black, modifier = Modifier.size(24.dp))
+        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = textIconsTint(), modifier = Modifier.size(24.dp))
         Text(text = name, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-        Icon(painter = painterResource(id = R.drawable.ic_bell), contentDescription = "Back", tint = Color.Black, modifier = Modifier.size(24.dp))
-        Icon(painter = painterResource(id = R.drawable.ic_dotmenu), contentDescription = "Back", tint = Color.Black, modifier = Modifier.size(20.dp))
+        Icon(
+            painter = painterResource(id = R.drawable.ic_bell),
+            contentDescription = "Back",
+            tint = textIconsTint(),
+            modifier = Modifier.size(24.dp)
+        )
+        Icon(
+            painter = painterResource(id = R.drawable.ic_dotmenu),
+            contentDescription = "Back",
+            tint = textIconsTint(),
+            modifier = Modifier.size(20.dp)
+        )
     }
 }
 
@@ -141,7 +147,7 @@ fun ProfileSection(modifier: Modifier = Modifier) {
         ) {
             RoundImage(
                     image = painterResource(id = R.drawable.shubhambhama), modifier = Modifier
-                    .size(100.dp)
+                    .size(80.dp)
                     .weight(3f)
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -162,9 +168,9 @@ fun StatSection(modifier: Modifier = Modifier) {
 @Composable
 fun ProfileStat(numberText: String, text: String, modifier: Modifier = Modifier) {
     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
-        Text(text = numberText, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+        Text(text = numberText, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = textIconsTint())
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = text)
+        Text(text = text, color = textIconsTint(), fontSize = 14.sp)
     }
 }
 
@@ -173,16 +179,31 @@ fun ProfileDescription(displayName: String, description: String, url: String, fo
     val letterSpacing = 0.sp
     val lineHeight = 20.sp
     Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
     ) {
-        Text(text = displayName, fontWeight = FontWeight.Bold, letterSpacing = letterSpacing, lineHeight = lineHeight)
-        Text(text = description, letterSpacing = letterSpacing, lineHeight = lineHeight, fontSize = 14.sp, fontWeight = FontWeight.W500)
-        Text(text = url, color = Color(0xFF3D3D91), letterSpacing = letterSpacing, lineHeight = lineHeight, fontSize = 15.sp)
+        Text(
+            text = displayName,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = letterSpacing,
+            lineHeight = lineHeight,
+            color = textIconsTint(),
+            fontSize = 13.sp
+        )
+        Text(
+            text = description,
+            letterSpacing = letterSpacing,
+            lineHeight = lineHeight,
+            fontSize = 13.5.sp,
+            fontWeight = FontWeight.W500,
+            color = textIconsTint()
+        )
+        Text(text = url, letterSpacing = letterSpacing, lineHeight = lineHeight, fontSize = 13.5.sp,
+            color = textIconsTint())
         if (followedBy.isNotEmpty()) {
             Text(text = buildAnnotatedString {
-                val boldStyle = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold)
+                val boldStyle = SpanStyle(color = textIconsTint(), fontWeight = FontWeight.Bold)
                 append("Followed by ")
                 followedBy.forEachIndexed { index, name ->
                     pushStyle(boldStyle)
@@ -195,7 +216,7 @@ fun ProfileDescription(displayName: String, description: String, url: String, fo
                     pushStyle(boldStyle)
                     append("$otherCount others")
                 }
-            }, letterSpacing = letterSpacing, lineHeight = lineHeight, fontSize = 15.sp)
+            }, letterSpacing = letterSpacing, lineHeight = lineHeight, fontSize = 13.sp, color = textIconsTint())
         }
     }
 }
@@ -208,7 +229,7 @@ fun ButtonSection(modifier: Modifier = Modifier) {
         ActionButton(
             text = "Following", icon = Icons.Default.KeyboardArrowDown, modifier = Modifier
                 .defaultMinSize(minWidth = minWidth)
-                .height(height)
+                .height(height),
         )
         ActionButton(
             text = "Message", modifier = Modifier
@@ -235,10 +256,10 @@ fun ActionButton(modifier: Modifier = Modifier, text: String? = null, icon: Imag
                 width = 1.dp, color = Color.LightGray,
                 shape = RoundedCornerShape(6.dp)
             )
-            .padding(6.dp)
+            .padding(8.dp)
     ) {
-        text?.let { Text(text = text, fontWeight = FontWeight.SemiBold, fontSize = 14.sp) }
-        icon?.let { Icon(imageVector = icon, contentDescription = null, tint = Color.Black) }
+        text?.let { Text(text = text, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = textIconsTint()) }
+        icon?.let { Icon(imageVector = icon, contentDescription = null, tint = textIconsTint()) }
     }
 }
 
@@ -255,12 +276,12 @@ fun PostTabView(
     TabRow(
         selectedTabIndex = selectedTagIndex,
         containerColor = Color.Transparent,
-        contentColor = Color.Black, modifier = modifier
+        contentColor = textIconsTint(), modifier = modifier
     ) {
         imageWithText.forEachIndexed { index, item ->
             Tab(
                 selected = selectedTagIndex == index,
-                selectedContentColor = Color.Black,
+                selectedContentColor = textIconsTint(),
                 unselectedContentColor = inactiveColor,
                 onClick = {
                     selectedTagIndex = index
@@ -268,7 +289,7 @@ fun PostTabView(
                 }) {
                 Icon(
                     painter = item.image, contentDescription = item.name,
-                    tint = if (selectedTagIndex == index) Color.Black else inactiveColor,
+                    tint = if (selectedTagIndex == index) textIconsTint() else inactiveColor,
                     modifier = Modifier
                         .padding(10.dp)
                         .size(20.dp)

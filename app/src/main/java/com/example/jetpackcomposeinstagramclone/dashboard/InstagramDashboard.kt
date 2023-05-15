@@ -2,6 +2,7 @@ package com.example.jetpackcomposeinstagramclone.dashboard
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -14,14 +15,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcomposeinstagramclone.BottomNavigationScreens
-import com.example.jetpackcomposeinstagramclone.dashboard.submodule.ProfileScreen
 import com.example.jetpackcomposeinstagramclone.dashboard.submodule.HomeScreen
+import com.example.jetpackcomposeinstagramclone.dashboard.submodule.ProfileScreen
+import com.example.jetpackcomposeinstagramclone.ui.theme.Gray500
 import com.example.jetpackcomposeinstagramclone.ui.theme.backgroundColor
 
 @Composable
@@ -51,12 +54,13 @@ fun BottomBar(modifier: Modifier = Modifier, navController: NavHostController, s
                     androidx.compose.material.Icon(
                         painter = painterResource(id = screen.icon),
                         contentDescription = context.getString(screen.resId),
+                        modifier = Modifier.size(22.dp)
                     )
                 },
                 selected = currentRoute == screen.route,
                 alwaysShowLabel = false,
                 selectedContentColor = Color.White,
-                unselectedContentColor = Color.DarkGray,
+                unselectedContentColor = Gray500,
                 onClick = {
                     if (currentRoute != screen.route) {
                         navController.navigate(screen.route)

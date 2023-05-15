@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposeinstagramclone.R
 import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
 import com.example.jetpackcomposeinstagramclone.ui.theme.backgroundColor
+import com.example.jetpackcomposeinstagramclone.ui.theme.textIconsTint
 import com.example.jetpackcomposeinstagramclone.util.HighlightSection
 
 @Composable
@@ -35,15 +36,15 @@ fun HomeScreen() {
             HomeTopBar()
             HighlightSection(
                 highlights = listOf(
-                    HighlightsListHolderData(painterResource(id = R.drawable.shubhambhama), "Dummy Photo", isAddHighlight = true),
-                    HighlightsListHolderData(painterResource(id = R.drawable.starthere), "Start Here"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.family), "Family"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.plant), "Plant"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.lifestyle), "Life Style"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.about), "About"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.shubhambhama), "", isAddHighlight = true),
+                    HighlightsListHolderData(painterResource(id = R.drawable.starthere), ""),
+                    HighlightsListHolderData(painterResource(id = R.drawable.family), ""),
+                    HighlightsListHolderData(painterResource(id = R.drawable.plant), ""),
+                    HighlightsListHolderData(painterResource(id = R.drawable.lifestyle), ""),
+                    HighlightsListHolderData(painterResource(id = R.drawable.about), ""),
                 ), modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 4.dp),
+                    .padding(horizontal = 10.dp, vertical = 10.dp),
                 viewHolderModifier = Modifier.padding(4.dp)
             ) {
             }
@@ -65,7 +66,7 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
                 .height(52.dp)
                 .padding(8.dp)
                 .weight(0.5f),
-            tint = Color.White,
+            tint = textIconsTint(),
         )
         Row(
             horizontalArrangement = Arrangement.End,
@@ -78,7 +79,7 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
                 modifier = Modifier
                     .size(40.dp)
                     .padding(8.dp),
-                tint = Color.White
+                tint = textIconsTint()
             )
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
@@ -86,7 +87,7 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
                 modifier = Modifier
                     .size(40.dp)
                     .padding(8.dp),
-                tint = Color.White
+                tint = textIconsTint()
             )
         }
     }

@@ -61,3 +61,10 @@ fun backgroundColor(): Color {
     val lightColor = Color.White
     return if (isSystemInDarkTheme()) darkColor else lightColor
 }
+
+@Composable
+fun textIconsTint(): Color {
+    val darkColor = Color.Black
+    val lightColor = Color.White
+    return if (isSystemInDarkTheme()) lightColor else darkColor
+}

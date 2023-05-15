@@ -3,6 +3,7 @@ package com.example.jetpackcomposeinstagramclone.util
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
+import com.example.jetpackcomposeinstagramclone.ui.theme.textIconsTint
 import kotlin.random.Random
 
 @Composable
@@ -43,10 +45,20 @@ fun HighlightSection(
         items(highlights.size) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
-                modifier = viewHolderModifier.clickable { onClickAction.invoke(highlights[it]) }
+                modifier = viewHolderModifier.clickable {
+                    onClickAction.invoke(highlights[it])
+                }
             ) {
                 RoundImage(image = highlights[it].image, modifier = Modifier.size(70.dp), isAddHighlight = highlights[it].isAddHighlight)
-                Text(text = highlights[it].name, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, fontSize = 12.sp)
+                if (highlights[it].name.isNotEmpty()) {
+                    Text(
+                        text = highlights[it].name,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp,
+                        color = textIconsTint()
+                    )
+                }
             }
         }
     }
@@ -54,31 +66,14 @@ fun HighlightSection(
 
 @Composable
 fun RoundImage(image: Painter, modifier: Modifier = Modifier, isAddHighlight: Boolean = false) {
-    val imageSize = remember(image) {
-        mutableStateOf(Pair(0.dp, 0.dp))
-    }
     Box(modifier = Modifier.wrapContentSize()) {
         Image(
             painter = image, contentDescription = null,
             modifier = modifier
                 .aspectRatio(1f, matchHeightConstraintsFirst = true)
                 .border(width = 1.dp, color = Color.LightGray, shape = CircleShape)
-                .padding(3.dp)
+                .padding(2.dp)
                 .clip(CircleShape)
-                .layout { measurable, constraints ->
-                    val placeable = measurable.measure(constraints)
-                    imageSize.value = Pair(
-                        placeable.width
-                            .toFloat()
-                            .toDp(),
-                        placeable.height
-                            .toFloat()
-                            .toDp()
-                    )
-                    layout(placeable.width, placeable.height) {
-                        placeable.placeRelative(0, 0)
-                    }
-                }
         )
         if (isAddHighlight) {
             Icon(
@@ -86,8 +81,8 @@ fun RoundImage(image: Painter, modifier: Modifier = Modifier, isAddHighlight: Bo
                 contentDescription = "Add Highlight",
                 tint = Color.White,
                 modifier = Modifier.padding(
-                    start = imageSize.value.first / 2 + imageSize.value.first / 4,
-                    top = imageSize.value.first / 2 + imageSize.value.first / 4
+                    start = 68.dp / 2 + 68.dp / 4,
+                    top = 68.dp / 2 + 68.dp / 4
                 )
             )
         }
