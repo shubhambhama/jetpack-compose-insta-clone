@@ -1,9 +1,12 @@
 package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +20,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -26,17 +31,20 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -55,43 +63,65 @@ import com.example.jetpackcomposeinstagramclone.util.rememberRandomColor
 
 @Composable
 fun ProfileScreen() {
+    val scrollState = rememberScrollState()
+    val boxHeight = remember { mutableStateOf(0f) }
+
     var selectedTabIndex by remember {
         mutableStateOf(0)
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(backgroundColor())
-    ) {
-        TopBar(name = "shubhambhama", modifier = Modifier.padding(top = 16.dp))
-        Spacer(modifier = Modifier.height(12.dp))
-        ProfileSection()
-        Spacer(modifier = Modifier.height(8.dp))
-        ProfileDescription(
-            displayName = "Shubham Bhama",
-            description = "• Founder of \uD835\uDE82\uD835\uDE91\uD835\uDE9E\uD835\uDE8B\uD835\uDE91 \uD835\uDE7C\uD835\uDE92\uD835\uDE95\uD835\uDE8A\uD835\uDE97\n" +
-                    "• Engineer at Paytm \uD83D\uDC68\u200D\uD83D\uDCBB • Professional Trader \uD83E\uDDAC\n" +
-                    "• The Developer of HPCL Projects",
-            url = "https://medium.com/@shubhambhama", followedBy = listOf("instagram", "android"), otherCount = 17
-        )
-        Spacer(modifier = Modifier.height(25.dp))
-        ButtonSection(Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(25.dp))
-        HighlightSection(
-            highlights = listOf(
-                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 1"),
-                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 2"),
-                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 3"),
-                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 4"),
-                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 5"),
-            ), modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            viewHolderModifier = Modifier.padding(horizontal = 16.dp)
-        ) {
 
+    Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
+        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+            val boxModifier = Modifier
+                .scale(1.0f)
+                .clipToBounds()
+                .height(boxHeight.value.dp)
+            Box(modifier = boxModifier) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(backgroundColor())
+                ) {
+                    TopBar(name = "shubhambhama", modifier = Modifier.padding(top = 16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
+                    ProfileSection()
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ProfileDescription(
+                        displayName = "Shubham Bhama",
+                        description = "• Founder of \uD835\uDE82\uD835\uDE91\uD835\uDE9E\uD835\uDE8B\uD835\uDE91 \uD835\uDE7C\uD835\uDE92\uD835\uDE95\uD835\uDE8A\uD835\uDE97\n" +
+                                "• Engineer at Paytm \uD83D\uDC68\u200D\uD83D\uDCBB • Professional Trader \uD83E\uDDAC\n" +
+                                "• The Developer of HPCL Projects",
+                        url = "https://medium.com/@shubhambhama", followedBy = listOf("instagram", "android"), otherCount = 17
+                    )
+                    Spacer(modifier = Modifier.height(25.dp))
+                    ButtonSection(Modifier.fillMaxWidth())
+                    Spacer(modifier = Modifier.height(25.dp))
+                    HighlightSection(
+                        highlights = listOf(
+                            HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 1"),
+                            HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 2"),
+                            HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 3"),
+                            HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 4"),
+                            HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 5"),
+                        ), modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        viewHolderModifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+
+                    }
+                    Spacer(modifier = Modifier.height(25.dp))
+                }
+            }
+            val density = LocalDensity.current
+            LaunchedEffect(Unit) {
+                boxHeight.value = with(density) { maxHeight.toPx() }
+            }
         }
-        Spacer(modifier = Modifier.height(25.dp))
         PostTabView(imageWithText = listOf(
             HighlightsListHolderData(painterResource(id = R.drawable.ic_grid), "Post"),
             HighlightsListHolderData(painterResource(id = R.drawable.ic_reels), "Reels"),
@@ -107,8 +137,15 @@ fun ProfileScreen() {
                 painterResource(id = R.drawable.instagram_clone_2),
                 painterResource(id = R.drawable.photo_rearrange),
                 painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
             ),
-            modifier = Modifier.fillMaxWidth())
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f).padding(bottom = 36.dp))
         }
     }
 }
@@ -276,7 +313,7 @@ fun PostTabView(
     TabRow(
         selectedTabIndex = selectedTagIndex,
         containerColor = Color.Transparent,
-        contentColor = textIconsTint(), modifier = modifier
+        contentColor = textIconsTint(), modifier = modifier.background(backgroundColor())
     ) {
         imageWithText.forEachIndexed { index, item ->
             Tab(
@@ -301,7 +338,9 @@ fun PostTabView(
 
 @Composable
 fun PostSection(posts: List<Painter>, modifier: Modifier = Modifier) {
-    LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = modifier.scale(1.01f)) {
+    LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = modifier
+        .scale(1.01f)
+        .background(backgroundColor())) {
         items(posts.size) {
             Image(
                 painter = posts[it], contentDescription = null, contentScale = ContentScale.Crop, modifier = modifier
