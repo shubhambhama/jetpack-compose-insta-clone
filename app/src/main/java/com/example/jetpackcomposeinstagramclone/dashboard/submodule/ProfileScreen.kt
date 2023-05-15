@@ -3,6 +3,7 @@ package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -35,20 +36,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeinstagramclone.R
-import com.example.jetpackcomposeinstagramclone.model.ImageWithText
+import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
+import com.example.jetpackcomposeinstagramclone.util.HighlightSection
+import com.example.jetpackcomposeinstagramclone.util.RoundImage
+import com.example.jetpackcomposeinstagramclone.util.rememberPainter
+import com.example.jetpackcomposeinstagramclone.util.rememberRandomColor
+import kotlin.random.Random
 
 @Composable
 fun ProfileScreen() {
@@ -71,35 +80,37 @@ fun ProfileScreen() {
         Spacer(modifier = Modifier.height(25.dp))
         ButtonSection(Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(25.dp))
+
         HighlightSection(
             highlights = listOf(
-                ImageWithText(painterResource(id = R.drawable.youtube), "YouTube"),
-                ImageWithText(painterResource(id = R.drawable.qa), "Q&A"),
-                ImageWithText(painterResource(id = R.drawable.discord), "Discord"),
-                ImageWithText(painterResource(id = R.drawable.telegram), "Telegram"),
-                ImageWithText(painterResource(id = R.drawable.qa), "Other"),
+                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 1"),
+                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 2"),
+                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 3"),
+                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 4"),
+                HighlightsListHolderData(rememberPainter(rememberRandomColor()), "Highlight 5"),
             ), modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-        )
+                .padding(horizontal = 20.dp),
+            viewHolderModifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+
+        }
         Spacer(modifier = Modifier.height(25.dp))
         PostTabView(imageWithText = listOf(
-                ImageWithText(painterResource(id = R.drawable.ic_grid), "Post"),
-                ImageWithText(painterResource(id = R.drawable.ic_reels), "Reels"),
-                ImageWithText(painterResource(id = R.drawable.ic_igtv_), "IGTV"),
-                ImageWithText(painterResource(id = R.drawable.profile), "Profile"),
-            )
+            HighlightsListHolderData(painterResource(id = R.drawable.ic_grid), "Post"),
+            HighlightsListHolderData(painterResource(id = R.drawable.ic_reels), "Reels"),
+            HighlightsListHolderData(painterResource(id = R.drawable.ic_igtv_), "IGTV"),
+            HighlightsListHolderData(painterResource(id = R.drawable.profile), "Profile"),
+        )
         ) {
             selectedTabIndex = it
         }
         when(selectedTabIndex) {
             0 -> PostSection(posts = listOf(
-                painterResource(id = R.drawable.kmm),
-                painterResource(id = R.drawable.intermediate_dev),
-                painterResource(id = R.drawable.master_logical_thinking),
-                painterResource(id = R.drawable.bad_habits),
-                painterResource(id = R.drawable.multiple_languages),
-                painterResource(id = R.drawable.learn_coding_fast),
+                painterResource(id = R.drawable.instagram_clone_1),
+                painterResource(id = R.drawable.instagram_clone_2),
+                painterResource(id = R.drawable.photo_rearrange),
+                painterResource(id = R.drawable.clone_club),
             ),
             modifier = Modifier.fillMaxWidth())
         }
@@ -137,19 +148,6 @@ fun ProfileSection(modifier: Modifier = Modifier) {
             StatSection(modifier = Modifier.weight(7f))
         }
     }
-}
-
-@Composable
-fun RoundImage(image: Painter, modifier: Modifier = Modifier) {
-    Image(
-            painter = image, contentDescription = null,
-            modifier = modifier
-                .aspectRatio(1f, matchHeightConstraintsFirst = true)
-                .border(width = 1.dp, color = Color.LightGray, shape = CircleShape)
-                .padding(3.dp)
-                .clip(CircleShape)
-    )
-
 }
 
 @Composable
@@ -245,31 +243,23 @@ fun ActionButton(modifier: Modifier = Modifier, text: String? = null, icon: Imag
 }
 
 @Composable
-fun HighlightSection(modifier: Modifier = Modifier, highlights: List<ImageWithText>) {
-    LazyRow(modifier = modifier) {
-        items(highlights.size) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(end = 15.dp)
-            ) {
-                RoundImage(image = highlights[it].image, modifier = Modifier.size(70.dp))
-                Text(text = highlights[it].name, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, fontSize = 12.sp)
-            }
-        }
-    }
-}
-
-@Composable
-fun PostTabView(modifier: Modifier = Modifier, imageWithText: List<ImageWithText>, onTabSelected: (selectedIndex: Int) -> Unit) {
+fun PostTabView(
+    modifier: Modifier = Modifier,
+    imageWithText: List<HighlightsListHolderData>,
+    onTabSelected: (selectedIndex: Int) -> Unit
+) {
     var selectedTagIndex by remember {
         mutableStateOf(0)
     }
     val inactiveColor = Color(0xFF777777)
-    TabRow(selectedTabIndex = selectedTagIndex,
+    TabRow(
+        selectedTabIndex = selectedTagIndex,
         containerColor = Color.Transparent,
-        contentColor = Color.Black, modifier = modifier) {
+        contentColor = Color.Black, modifier = modifier
+    ) {
         imageWithText.forEachIndexed { index, item ->
-            Tab(selected = selectedTagIndex == index,
+            Tab(
+                selected = selectedTagIndex == index,
                 selectedContentColor = Color.Black,
                 unselectedContentColor = inactiveColor,
                 onClick = {

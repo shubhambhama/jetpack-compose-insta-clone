@@ -3,6 +3,7 @@ package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposeinstagramclone.R
+import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
 import com.example.jetpackcomposeinstagramclone.ui.theme.backgroundColor
+import com.example.jetpackcomposeinstagramclone.util.HighlightSection
 
 @Composable
 fun HomeScreen() {
@@ -28,7 +31,23 @@ fun HomeScreen() {
             .fillMaxWidth()
             .background(backgroundColor())
     ) {
-        HomeTopBar()
+        Column {
+            HomeTopBar()
+            HighlightSection(
+                highlights = listOf(
+                    HighlightsListHolderData(painterResource(id = R.drawable.shubhambhama), "Dummy Photo", isAddHighlight = true),
+                    HighlightsListHolderData(painterResource(id = R.drawable.starthere), "Start Here"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.family), "Family"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.plant), "Plant"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.lifestyle), "Life Style"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.about), "About"),
+                ), modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp),
+                viewHolderModifier = Modifier.padding(4.dp)
+            ) {
+            }
+        }
     }
 }
 
@@ -50,7 +69,9 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
         )
         Row(
             horizontalArrangement = Arrangement.End,
-            modifier = Modifier.weight(1f).padding(end = 8.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_heart), contentDescription = null,
