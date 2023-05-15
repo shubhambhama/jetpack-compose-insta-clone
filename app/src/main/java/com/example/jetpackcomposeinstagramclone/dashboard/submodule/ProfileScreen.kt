@@ -71,7 +71,7 @@ fun ProfileScreen() {
             displayName = "Shubham Bhama",
             description = "• Founder of \uD835\uDE82\uD835\uDE91\uD835\uDE9E\uD835\uDE8B\uD835\uDE91 \uD835\uDE7C\uD835\uDE92\uD835\uDE95\uD835\uDE8A\uD835\uDE97\n" +
                     "• Engineer at Paytm \uD83D\uDC68\u200D\uD83D\uDCBB • Professional Trader \uD83E\uDDAC\n" +
-                    "• The Developer of HPCL Projects\n",
+                    "• The Developer of HPCL Projects",
             url = "https://medium.com/@shubhambhama", followedBy = listOf("instagram", "android"), otherCount = 17
         )
         Spacer(modifier = Modifier.height(25.dp))
@@ -95,7 +95,7 @@ fun ProfileScreen() {
         PostTabView(imageWithText = listOf(
             HighlightsListHolderData(painterResource(id = R.drawable.ic_grid), "Post"),
             HighlightsListHolderData(painterResource(id = R.drawable.ic_reels), "Reels"),
-            HighlightsListHolderData(painterResource(id = R.drawable.ic_igtv_), "IGTV"),
+            HighlightsListHolderData(painterResource(id = R.drawable.ic_igtv), "IGTV"),
             HighlightsListHolderData(painterResource(id = R.drawable.profile), "Profile"),
         )
         ) {
@@ -120,7 +120,7 @@ fun TopBar(name: String, modifier: Modifier = Modifier) {
             modifier = modifier.fillMaxWidth()
     ) {
         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = textIconsTint(), modifier = Modifier.size(24.dp))
-        Text(text = name, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+        Text(text = name, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = textIconsTint())
         Icon(
             painter = painterResource(id = R.drawable.ic_bell),
             contentDescription = "Back",
@@ -292,7 +292,7 @@ fun PostTabView(
                     tint = if (selectedTagIndex == index) textIconsTint() else inactiveColor,
                     modifier = Modifier
                         .padding(10.dp)
-                        .size(20.dp)
+                        .size(26.dp)
                 )
             }
         }
