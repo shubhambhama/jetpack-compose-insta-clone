@@ -69,19 +69,21 @@ fun ProfileScreen() {
         mutableStateOf(0)
     }
 
-    Column(Modifier
+    Column(
+        Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)) {
+            .verticalScroll(scrollState)
+    ) {
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val boxModifier = Modifier
-                    .scale(1.0f)
-                    .clipToBounds()
-                    .height(boxHeight.value.dp)
+                .scale(1.0f)
+                .clipToBounds()
+                .height(boxHeight.value.dp)
             Box(modifier = boxModifier) {
                 Column(
                     modifier = Modifier
-                            .fillMaxSize()
-                            .background(backgroundColor())
+                        .fillMaxSize()
+                        .background(backgroundColor())
                 ) {
                     TopBar(name = "shubhambhama", modifier = Modifier.padding(top = 16.dp))
                     Spacer(modifier = Modifier.height(12.dp))
@@ -132,18 +134,18 @@ fun ProfileScreen() {
             0 -> PostSection(posts = listOf(
                 painterResource(id = R.drawable.instagram_clone_1),
                 painterResource(id = R.drawable.instagram_clone_2),
-                    painterResource(id = R.drawable.photo_rearrange),
-                    painterResource(id = R.drawable.clone_club),
-                    painterResource(id = R.drawable.clone_club),
-                    painterResource(id = R.drawable.clone_club),
-                    painterResource(id = R.drawable.clone_club),
-                    painterResource(id = R.drawable.clone_club),
-                    painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.photo_rearrange),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
+                painterResource(id = R.drawable.clone_club),
             ), modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(bottom = 36.dp)
-                    .background(backgroundColor()))
+                .fillMaxWidth()
+                .weight(1f)
+                .background(backgroundColor())
+            )
         }
     }
 }
@@ -154,19 +156,35 @@ fun TopBar(name: String, modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceAround,
             modifier = modifier.fillMaxWidth()
     ) {
-        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = textIconsTint(), modifier = Modifier.size(24.dp))
-        Text(text = name, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = textIconsTint())
+        Icon(
+            imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = textIconsTint(),
+            modifier = Modifier
+                .size(24.dp)
+                .weight(1f)
+        )
+        Text(
+            text = name, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = textIconsTint(),
+            modifier = Modifier
+                .weight(9f)
+                .padding(start = 16.dp)
+        )
         Icon(
             painter = painterResource(id = R.drawable.ic_bell),
-            contentDescription = "Back",
+            contentDescription = "Bell",
             tint = textIconsTint(),
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier
+                .size(20.dp)
+                .weight(1f)
+                .padding(end = 16.dp)
         )
         Icon(
             painter = painterResource(id = R.drawable.ic_dotmenu),
             contentDescription = "Menu",
             tint = textIconsTint(),
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier
+                .size(20.dp)
+                .weight(1f)
+                .padding(end = 16.dp)
         )
     }
 }
@@ -177,8 +195,8 @@ fun ProfileSection(modifier: Modifier = Modifier) {
         Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
         ) {
             RoundImage(
                     image = painterResource(id = R.drawable.shubhambhama), modifier = Modifier
@@ -215,8 +233,8 @@ fun ProfileDescription(displayName: String, description: String, url: String, fo
     val lineHeight = 20.sp
     Column(
         modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
     ) {
         Text(
             text = displayName,
@@ -323,8 +341,8 @@ fun PostTabView(
                     painter = item.image, contentDescription = item.name,
                     tint = if (selectedTagIndex == index) textIconsTint() else inactiveColor,
                     modifier = Modifier
-                            .padding(10.dp)
-                            .size(26.dp)
+                        .padding(10.dp)
+                        .size(26.dp)
                 )
             }
         }
@@ -334,8 +352,8 @@ fun PostTabView(
 @Composable
 fun PostSection(posts: List<Painter>, modifier: Modifier = Modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = modifier
-            .scale(1.01f)
-            .background(backgroundColor())) {
+        .scale(1.01f)
+        .background(backgroundColor())) {
         items(posts.size) {
             Image(
                 painter = posts[it], contentDescription = null, contentScale = ContentScale.Crop, modifier = modifier

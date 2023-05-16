@@ -3,7 +3,6 @@ package com.example.jetpackcomposeinstagramclone.util
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,12 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,12 +23,14 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.layout
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcomposeinstagramclone.R
 import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
+import com.example.jetpackcomposeinstagramclone.ui.theme.Blue300
 import com.example.jetpackcomposeinstagramclone.ui.theme.textIconsTint
 import kotlin.random.Random
 
@@ -56,7 +54,8 @@ fun HighlightSection(
                         overflow = TextOverflow.Ellipsis,
                         textAlign = TextAlign.Center,
                         fontSize = 12.sp,
-                        color = textIconsTint()
+                        color = textIconsTint(),
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
             }
@@ -77,13 +76,13 @@ fun RoundImage(image: Painter, modifier: Modifier = Modifier, isAddHighlight: Bo
         )
         if (isAddHighlight) {
             Icon(
-                Icons.Default.AddCircle,
+                painter = painterResource(id = R.drawable.ic_add),
                 contentDescription = "Add Highlight",
-                tint = Color.White,
                 modifier = Modifier.padding(
-                    start = 68.dp / 2 + 68.dp / 4,
-                    top = 68.dp / 2 + 68.dp / 4
-                )
+                    start = 68.dp / 2 + 62.dp / 4,
+                    top = 68.dp / 2 + 62.dp / 4
+                ),
+                tint = Blue300
             )
         }
     }

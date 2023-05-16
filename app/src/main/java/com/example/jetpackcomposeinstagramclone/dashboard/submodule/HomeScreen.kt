@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.example.jetpackcomposeinstagramclone.R
@@ -69,8 +70,7 @@ fun HomeScreen() {
             ) {}
             ListOfPosts(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 52.dp), sizeOfList = 10, configuration = configuration
+                    .fillMaxSize(), sizeOfList = 10, configuration = configuration
             )
         }
     }
