@@ -29,7 +29,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import coil.request.CachePolicy
@@ -152,12 +156,13 @@ fun PostTopHeading(postListHolderData: PostListHolderData, modifier: Modifier = 
         Column(verticalArrangement = Arrangement.Center, modifier = Modifier.weight(8f)) {
             Text(
                 text = postListHolderData.userName,
-                fontSize = MaterialTheme.typography.body1.fontSize,
-                color = textIconsTint()
+                fontSize = 14.sp,
+                color = textIconsTint(),
+                fontWeight = FontWeight.SemiBold
             )
             if (postListHolderData.headingMetaData.isNotEmpty()) Text(
                 text = postListHolderData.headingMetaData,
-                fontSize = MaterialTheme.typography.body2.fontSize,
+                fontSize = 12.sp,
                 color = textIconsTint()
             )
         }
