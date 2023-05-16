@@ -1,7 +1,6 @@
 package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -70,21 +69,19 @@ fun ProfileScreen() {
         mutableStateOf(0)
     }
 
-    Column(
-        Modifier
+    Column(Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)
-    ) {
+            .verticalScroll(scrollState)) {
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val boxModifier = Modifier
-                .scale(1.0f)
-                .clipToBounds()
-                .height(boxHeight.value.dp)
+                    .scale(1.0f)
+                    .clipToBounds()
+                    .height(boxHeight.value.dp)
             Box(modifier = boxModifier) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(backgroundColor())
+                            .fillMaxSize()
+                            .background(backgroundColor())
                 ) {
                     TopBar(name = "shubhambhama", modifier = Modifier.padding(top = 16.dp))
                     Spacer(modifier = Modifier.height(12.dp))
@@ -135,17 +132,18 @@ fun ProfileScreen() {
             0 -> PostSection(posts = listOf(
                 painterResource(id = R.drawable.instagram_clone_1),
                 painterResource(id = R.drawable.instagram_clone_2),
-                painterResource(id = R.drawable.photo_rearrange),
-                painterResource(id = R.drawable.clone_club),
-                painterResource(id = R.drawable.clone_club),
-                painterResource(id = R.drawable.clone_club),
-                painterResource(id = R.drawable.clone_club),
-                painterResource(id = R.drawable.clone_club),
-                painterResource(id = R.drawable.clone_club),
-            ),
-                modifier = Modifier
+                    painterResource(id = R.drawable.photo_rearrange),
+                    painterResource(id = R.drawable.clone_club),
+                    painterResource(id = R.drawable.clone_club),
+                    painterResource(id = R.drawable.clone_club),
+                    painterResource(id = R.drawable.clone_club),
+                    painterResource(id = R.drawable.clone_club),
+                    painterResource(id = R.drawable.clone_club),
+            ), modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f).padding(bottom = 36.dp))
+                    .weight(1f)
+                    .padding(bottom = 36.dp)
+                    .background(backgroundColor()))
         }
     }
 }
@@ -166,7 +164,7 @@ fun TopBar(name: String, modifier: Modifier = Modifier) {
         )
         Icon(
             painter = painterResource(id = R.drawable.ic_dotmenu),
-            contentDescription = "Back",
+            contentDescription = "Menu",
             tint = textIconsTint(),
             modifier = Modifier.size(20.dp)
         )
@@ -179,8 +177,8 @@ fun ProfileSection(modifier: Modifier = Modifier) {
         Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
         ) {
             RoundImage(
                     image = painterResource(id = R.drawable.shubhambhama), modifier = Modifier
@@ -217,8 +215,8 @@ fun ProfileDescription(displayName: String, description: String, url: String, fo
     val lineHeight = 20.sp
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
     ) {
         Text(
             text = displayName,
@@ -289,10 +287,7 @@ fun ButtonSection(modifier: Modifier = Modifier) {
 fun ActionButton(modifier: Modifier = Modifier, text: String? = null, icon: ImageVector? = null) {
     Row(
         horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically, modifier = modifier
-            .border(
-                width = 1.dp, color = Color.LightGray,
-                shape = RoundedCornerShape(6.dp)
-            )
+            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(6.dp))
             .padding(8.dp)
     ) {
         text?.let { Text(text = text, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = textIconsTint()) }
@@ -328,8 +323,8 @@ fun PostTabView(
                     painter = item.image, contentDescription = item.name,
                     tint = if (selectedTagIndex == index) textIconsTint() else inactiveColor,
                     modifier = Modifier
-                        .padding(10.dp)
-                        .size(26.dp)
+                            .padding(10.dp)
+                            .size(26.dp)
                 )
             }
         }
@@ -339,8 +334,8 @@ fun PostTabView(
 @Composable
 fun PostSection(posts: List<Painter>, modifier: Modifier = Modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = modifier
-        .scale(1.01f)
-        .background(backgroundColor())) {
+            .scale(1.01f)
+            .background(backgroundColor())) {
         items(posts.size) {
             Image(
                 painter = posts[it], contentDescription = null, contentScale = ContentScale.Crop, modifier = modifier

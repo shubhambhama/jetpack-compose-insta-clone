@@ -1,29 +1,41 @@
 package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposeinstagramclone.R
 import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
+import com.example.jetpackcomposeinstagramclone.model.PostListHolderData
 import com.example.jetpackcomposeinstagramclone.ui.theme.backgroundColor
 import com.example.jetpackcomposeinstagramclone.ui.theme.textIconsTint
 import com.example.jetpackcomposeinstagramclone.util.HighlightSection
+import com.example.jetpackcomposeinstagramclone.util.RoundImage
 
 @Composable
 fun HomeScreen() {
@@ -36,18 +48,38 @@ fun HomeScreen() {
             HomeTopBar()
             HighlightSection(
                 highlights = listOf(
-                    HighlightsListHolderData(painterResource(id = R.drawable.shubhambhama), "", isAddHighlight = true),
-                    HighlightsListHolderData(painterResource(id = R.drawable.starthere), ""),
-                    HighlightsListHolderData(painterResource(id = R.drawable.family), ""),
-                    HighlightsListHolderData(painterResource(id = R.drawable.plant), ""),
-                    HighlightsListHolderData(painterResource(id = R.drawable.lifestyle), ""),
-                    HighlightsListHolderData(painterResource(id = R.drawable.about), ""),
+                    HighlightsListHolderData(
+                        painterResource(id = R.drawable.shubhambhama),
+                        "Your Story",
+                        isAddHighlight = true
+                    ),
+                    HighlightsListHolderData(painterResource(id = R.drawable.starthere), "Start Here"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.family), "Family"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.plant), "Plant"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.lifestyle), "Life Style"),
+                    HighlightsListHolderData(painterResource(id = R.drawable.about), "About"),
                 ), modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp),
-                viewHolderModifier = Modifier.padding(4.dp)
-            ) {
-            }
+                    .padding(horizontal = 10.dp, vertical = 10.dp), viewHolderModifier = Modifier.padding(4.dp)
+            ) {}
+            ListOfPosts(
+                postLists = listOf(
+                    PostListHolderData(
+                        image = painterResource(id = R.drawable.sample_post_1),
+                        profileImage = painterResource(id = R.drawable.ic_funny_face),
+                        "shubhambhama",
+                        "aashaye"
+                    ),
+                    PostListHolderData(
+                        image = painterResource(id = R.drawable.sample_post_2),
+                        profileImage = painterResource(id = R.drawable.ic_chayka_ai),
+                        "shubhambhama",
+                        "harry potter • Original audio"
+                    ),
+                ), modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 52.dp)
+            )
         }
     }
 }
@@ -75,20 +107,83 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
                 .padding(end = 8.dp)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_heart), contentDescription = null,
-                modifier = Modifier
+                painter = painterResource(id = R.drawable.ic_heart), contentDescription = null, modifier = Modifier
                     .size(40.dp)
-                    .padding(8.dp),
-                tint = textIconsTint()
+                    .padding(8.dp), tint = textIconsTint()
             )
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
-                painter = painterResource(id = R.drawable.ic_messenger), contentDescription = null,
-                modifier = Modifier
+                painter = painterResource(id = R.drawable.ic_messenger), contentDescription = null, modifier = Modifier
                     .size(40.dp)
-                    .padding(8.dp),
-                tint = textIconsTint()
+                    .padding(8.dp), tint = textIconsTint()
             )
         }
     }
+}
+
+@Composable
+fun ListOfPosts(modifier: Modifier = Modifier, postLists: List<PostListHolderData>) {
+    Box(modifier = modifier) {
+        LazyColumn {
+            items(postLists.size) {
+                PostViewHolder(postListHolderData = postLists[it])
+            }
+        }
+    }
+}
+
+@Composable
+fun PostViewHolder(modifier: Modifier = Modifier, postListHolderData: PostListHolderData) {
+    Column {
+        PostTopHeading(postListHolderData, Modifier.padding(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+        PostImage(image = postListHolderData.image)
+    }
+}
+
+@Composable
+fun PostTopHeading(postListHolderData: PostListHolderData, modifier: Modifier = Modifier) {
+    Row(modifier = modifier, verticalAlignment = CenterVertically) {
+        RoundImage(
+            image = postListHolderData.profileImage, modifier = Modifier
+                .size(36.dp)
+                .weight(1f)
+                .padding(start = 8.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(verticalArrangement = Arrangement.Center, modifier = Modifier.weight(8f)) {
+            Text(
+                text = postListHolderData.userName,
+                fontSize = MaterialTheme.typography.body1.fontSize,
+                color = textIconsTint()
+            )
+            if (postListHolderData.headingMetaData.isNotEmpty()) Text(
+                text = postListHolderData.headingMetaData,
+                fontSize = MaterialTheme.typography.body2.fontSize,
+                color = textIconsTint()
+            )
+        }
+        Box(
+            modifier = Modifier
+                .align(CenterVertically)
+                .padding(end = 16.dp)
+        ) {
+            androidx.compose.material3.Icon(
+                painter = painterResource(id = R.drawable.ic_dotmenu),
+                contentDescription = "Menu",
+                tint = textIconsTint(),
+                modifier = Modifier.size(14.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun PostImage(modifier: Modifier = Modifier, image: Painter) {
+    Image(
+        painter = image, contentDescription = null, modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .clip(RectangleShape)
+    )
 }
