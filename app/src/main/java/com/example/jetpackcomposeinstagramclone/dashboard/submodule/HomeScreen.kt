@@ -1,5 +1,6 @@
 package com.example.jetpackcomposeinstagramclone.dashboard.submodule
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,14 +21,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import com.example.jetpackcomposeinstagramclone.R
 import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
 import com.example.jetpackcomposeinstagramclone.model.PostListHolderData
@@ -39,6 +43,7 @@ import com.example.jetpackcomposeinstagramclone.util.RoundImage
 
 @Composable
 fun HomeScreen() {
+    val configuration = LocalConfiguration.current
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,22 +68,9 @@ fun HomeScreen() {
                     .padding(horizontal = 10.dp, vertical = 10.dp), viewHolderModifier = Modifier.padding(4.dp)
             ) {}
             ListOfPosts(
-                postLists = listOf(
-                    PostListHolderData(
-                        image = painterResource(id = R.drawable.sample_post_1),
-                        profileImage = painterResource(id = R.drawable.ic_funny_face),
-                        "shubhambhama",
-                        "aashaye"
-                    ),
-                    PostListHolderData(
-                        image = painterResource(id = R.drawable.sample_post_2),
-                        profileImage = painterResource(id = R.drawable.ic_chayka_ai),
-                        "shubhambhama",
-                        "harry potter • Original audio"
-                    ),
-                ), modifier = Modifier
+                modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 52.dp)
+                    .padding(bottom = 52.dp), sizeOfList = 10, configuration = configuration
             )
         }
     }
@@ -122,22 +114,28 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
 }
 
 @Composable
-fun ListOfPosts(modifier: Modifier = Modifier, postLists: List<PostListHolderData>) {
+fun ListOfPosts(modifier: Modifier = Modifier, sizeOfList: Int = 10, configuration: Configuration) {
+    val calcHeight = configuration.screenHeightDp * 0.6f
     Box(modifier = modifier) {
         LazyColumn {
-            items(postLists.size) {
-                PostViewHolder(postListHolderData = postLists[it])
+            items(sizeOfList) {
+                val model = PostListHolderData(
+                    profileImage = painterResource(id = R.drawable.ic_funny_face),
+                    headingMetaData = "harry potter • Original audio"
+                )
+                PostViewHolder(postListHolderData = model, height = calcHeight)
             }
         }
     }
 }
 
 @Composable
-fun PostViewHolder(modifier: Modifier = Modifier, postListHolderData: PostListHolderData) {
+fun PostViewHolder(modifier: Modifier = Modifier, postListHolderData: PostListHolderData, height: Float) {
     Column {
         PostTopHeading(postListHolderData, Modifier.padding(8.dp))
         Spacer(modifier = Modifier.height(8.dp))
-        PostImage(image = postListHolderData.image)
+        PostImage(imageUrl = postListHolderData.imageUrl, height = height)
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -166,7 +164,7 @@ fun PostTopHeading(postListHolderData: PostListHolderData, modifier: Modifier = 
         Box(
             modifier = Modifier
                 .align(CenterVertically)
-                .padding(end = 16.dp)
+                .padding(end = 4.dp)
         ) {
             androidx.compose.material3.Icon(
                 painter = painterResource(id = R.drawable.ic_dotmenu),
@@ -179,11 +177,17 @@ fun PostTopHeading(postListHolderData: PostListHolderData, modifier: Modifier = 
 }
 
 @Composable
-fun PostImage(modifier: Modifier = Modifier, image: Painter) {
+fun PostImage(modifier: Modifier = Modifier, imageUrl: String, height: Float) {
+    val context = LocalContext.current
+    val imageRequest = ImageRequest.Builder(context)
+        .diskCachePolicy(CachePolicy.ENABLED)
+        .memoryCachePolicy(CachePolicy.ENABLED)
+        .data(imageUrl).build()
+    val asyncImage = rememberAsyncImagePainter(imageRequest)
     Image(
-        painter = image, contentDescription = null, modifier = modifier
+        painter = asyncImage, contentDescription = null, modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight()
-            .clip(RectangleShape)
+            .height(height.dp)
+            .clip(RectangleShape), contentScale = ContentScale.Crop
     )
 }
