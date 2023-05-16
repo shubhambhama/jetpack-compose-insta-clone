@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,12 +29,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.example.jetpackcomposeinstagramclone.R
@@ -119,15 +115,17 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
 
 @Composable
 fun ListOfPosts(modifier: Modifier = Modifier, sizeOfList: Int = 10, configuration: Configuration) {
+    val listOfData = List(sizeOfList) {
+        PostListHolderData(
+            profileImage = painterResource(id = R.drawable.ic_funny_face),
+            headingMetaData = "harry potter • Original audio"
+        )
+    }
     val calcHeight = configuration.screenHeightDp * 0.6f
     Box(modifier = modifier) {
         LazyColumn {
             items(sizeOfList) {
-                val model = PostListHolderData(
-                    profileImage = painterResource(id = R.drawable.ic_funny_face),
-                    headingMetaData = "harry potter • Original audio"
-                )
-                PostViewHolder(postListHolderData = model, height = calcHeight)
+                PostViewHolder(postListHolderData = listOfData[it], height = calcHeight)
             }
         }
     }

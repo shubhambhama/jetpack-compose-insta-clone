@@ -7,4 +7,6 @@
     <string name="_add_post">Add Post</string>
     <string name="_igtv">IGTV</string>
     <string name="_profile">Profile</string>
+
+    <string name="development_in_progress">Development In Progress</string>
 </resources>
