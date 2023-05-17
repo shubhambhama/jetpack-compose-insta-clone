@@ -1,6 +1,7 @@
 package com.example.jetpackcomposeinstagramclone.util
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -75,14 +76,13 @@ fun RoundImage(image: Painter, modifier: Modifier = Modifier, isAddHighlight: Bo
                 .clip(CircleShape)
         )
         if (isAddHighlight) {
-            Icon(
+            Image(
                 painter = painterResource(id = R.drawable.ic_add),
                 contentDescription = "Add Highlight",
                 modifier = Modifier.padding(
                     start = 68.dp / 2 + 62.dp / 4,
                     top = 68.dp / 2 + 62.dp / 4
-                ),
-                tint = Blue300
+                ).clip(CircleShape).background(Color.White),
             )
         }
     }

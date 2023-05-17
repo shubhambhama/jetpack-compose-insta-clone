@@ -1,6 +1,7 @@
 package com.example.jetpackcomposeinstagramclone.dashboard
 
 import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +28,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -111,6 +115,7 @@ fun NavigationRoute(modifier: Modifier = Modifier, navController: NavHostControl
         }
         composable(BottomNavigationScreens.Search.route) {
             DevelopmentInProgressScreen(text = "Search")
+
         }
         composable(BottomNavigationScreens.AddPost.route) {
             DevelopmentInProgressScreen(text = "Add Post")

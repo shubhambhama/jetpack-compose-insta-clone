@@ -23,11 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -114,7 +117,7 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
 }
 
 @Composable
-fun ListOfPosts(modifier: Modifier = Modifier, sizeOfList: Int = 10, configuration: Configuration) {
+fun ListOfPosts(modifier: Modifier = Modifier, sizeOfList: Int = 20, configuration: Configuration) {
     val listOfData = List(sizeOfList) {
         PostListHolderData(
             profileImage = painterResource(id = R.drawable.ic_funny_face),
@@ -137,7 +140,10 @@ fun PostViewHolder(modifier: Modifier = Modifier, postListHolderData: PostListHo
         PostTopHeading(postListHolderData, Modifier.padding(8.dp))
         Spacer(modifier = Modifier.height(8.dp))
         PostImage(imageUrl = postListHolderData.imageUrl, height = height)
+        Spacer(modifier = Modifier.height(8.dp))
+        PostBottomAction()
         Spacer(modifier = Modifier.height(16.dp))
+        PostLikeCaptionDetails(userName = postListHolderData.userName)
     }
 }
 
@@ -193,4 +199,58 @@ fun PostImage(modifier: Modifier = Modifier, imageUrl: String, height: Float) {
             .height(height.dp)
             .clip(RectangleShape), contentScale = ContentScale.Crop
     )
+}
+
+@Composable
+fun PostBottomAction(modifier: Modifier = Modifier) {
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+        Row(verticalAlignment = CenterVertically, horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(1f)) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_heart), modifier = Modifier
+                    .padding(start = 16.dp)
+                    .size(28.dp), contentDescription = "Like",
+                colorFilter = ColorFilter.tint(textIconsTint())
+            )
+            Image(
+                painter = painterResource(id = R.drawable.ic_comment), modifier = Modifier
+                    .padding(start = 16.dp)
+                    .size(28.dp), contentDescription = "Comment",
+                colorFilter = ColorFilter.tint(textIconsTint())
+            )
+            Image(
+                painter = painterResource(id = R.drawable.ic_send), modifier = Modifier
+                    .padding(start = 16.dp)
+                    .size(28.dp), contentDescription = "Send",
+                colorFilter = ColorFilter.tint(textIconsTint())
+            )
+        }
+        Box(modifier = Modifier.weight(0.1f)) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_bookmark), modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(28.dp), contentDescription = "Bookmark",
+                colorFilter = ColorFilter.tint(textIconsTint())
+            )
+        }
+    }
+}
+
+@Composable
+fun PostLikeCaptionDetails(modifier: Modifier = Modifier, userName: String) {
+    val boldStyle = SpanStyle(color = textIconsTint(), fontWeight = FontWeight.Bold)
+    Column(modifier = modifier.padding(start = 16.dp)) {
+        Text(text = buildAnnotatedString {
+            append("Liked by instagram, google and ")
+            pushStyle(boldStyle)
+            append("others")
+            pop()
+        }, fontSize = 13.sp, color = textIconsTint())
+
+        Text(text = buildAnnotatedString {
+            pushStyle(boldStyle)
+            append(userName)
+            pop()
+            append(" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+        }, fontSize = 13.sp, color = textIconsTint())
+    }
 }
