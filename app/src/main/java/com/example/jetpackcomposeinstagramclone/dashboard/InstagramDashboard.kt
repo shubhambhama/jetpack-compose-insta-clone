@@ -46,6 +46,7 @@ import com.example.jetpackcomposeinstagramclone.BottomNavigationScreens
 import com.example.jetpackcomposeinstagramclone.R
 import com.example.jetpackcomposeinstagramclone.dashboard.submodule.HomeScreen
 import com.example.jetpackcomposeinstagramclone.dashboard.submodule.ProfileScreen
+import com.example.jetpackcomposeinstagramclone.dashboard.submodule.SearchScreen
 import com.example.jetpackcomposeinstagramclone.ui.theme.backgroundColor
 import com.example.jetpackcomposeinstagramclone.ui.theme.textIconsTint
 
@@ -114,8 +115,8 @@ fun NavigationRoute(modifier: Modifier = Modifier, navController: NavHostControl
             HomeScreen()
         }
         composable(BottomNavigationScreens.Search.route) {
-            DevelopmentInProgressScreen(text = "Search")
-
+//            DevelopmentInProgressScreen(text = "Search")
+            SearchScreen()
         }
         composable(BottomNavigationScreens.AddPost.route) {
             DevelopmentInProgressScreen(text = "Add Post")

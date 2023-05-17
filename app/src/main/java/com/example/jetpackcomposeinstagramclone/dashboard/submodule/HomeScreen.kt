@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -49,6 +51,7 @@ import com.example.jetpackcomposeinstagramclone.util.RoundImage
 @Composable
 fun HomeScreen() {
     val configuration = LocalConfiguration.current
+    val scrollState = rememberLazyListState()
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,26 +59,27 @@ fun HomeScreen() {
     ) {
         Column {
             HomeTopBar()
-            HighlightSection(
-                highlights = listOf(
-                    HighlightsListHolderData(
-                        painterResource(id = R.drawable.shubhambhama),
-                        "Your Story",
-                        isAddHighlight = true
-                    ),
-                    HighlightsListHolderData(painterResource(id = R.drawable.starthere), "Start Here"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.family), "Family"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.plant), "Plant"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.lifestyle), "Life Style"),
-                    HighlightsListHolderData(painterResource(id = R.drawable.about), "About"),
-                ), modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp), viewHolderModifier = Modifier.padding(4.dp)
-            ) {}
             ListOfPosts(
                 modifier = Modifier
-                    .fillMaxSize(), sizeOfList = 10, configuration = configuration
-            )
+                    .fillMaxSize(), sizeOfList = 20, configuration = configuration, scrollState = scrollState
+            ) {
+                HighlightSection(
+                    highlights = listOf(
+                        HighlightsListHolderData(
+                            painterResource(id = R.drawable.shubhambhama),
+                            "Your Story",
+                            isAddHighlight = true
+                        ),
+                        HighlightsListHolderData(painterResource(id = R.drawable.starthere), "Start Here"),
+                        HighlightsListHolderData(painterResource(id = R.drawable.family), "Family"),
+                        HighlightsListHolderData(painterResource(id = R.drawable.plant), "Plant"),
+                        HighlightsListHolderData(painterResource(id = R.drawable.lifestyle), "Life Style"),
+                        HighlightsListHolderData(painterResource(id = R.drawable.about), "About"),
+                    ), modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 10.dp), viewHolderModifier = Modifier.padding(4.dp)
+                ) {}
+            }
         }
     }
 }
@@ -118,7 +122,10 @@ fun HomeTopBar(modifier: Modifier = Modifier, notificationCount: Int = 0, isAnyN
 }
 
 @Composable
-fun ListOfPosts(modifier: Modifier = Modifier, sizeOfList: Int = 20, configuration: Configuration) {
+fun ListOfPosts(
+    modifier: Modifier = Modifier, sizeOfList: Int = 20, configuration: Configuration, scrollState: LazyListState,
+    onHighListCallback: @Composable () -> Unit
+) {
     val listOfData = List(sizeOfList) {
         PostListHolderData(
             profileImage = painterResource(id = R.drawable.ic_funny_face),
@@ -127,7 +134,8 @@ fun ListOfPosts(modifier: Modifier = Modifier, sizeOfList: Int = 20, configurati
     }
     val calcHeight = configuration.screenHeightDp * 0.6f
     Box(modifier = modifier) {
-        LazyColumn {
+        LazyColumn(state = scrollState) {
+            item { onHighListCallback.invoke() }
             items(sizeOfList) {
                 PostViewHolder(postListHolderData = listOfData[it], height = calcHeight)
             }
@@ -204,7 +212,7 @@ fun PostImage(modifier: Modifier = Modifier, imageUrl: String, height: Float) {
 
 @Composable
 fun PostBottomAction(modifier: Modifier = Modifier) {
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+    Row(modifier = modifier, verticalAlignment = CenterVertically, horizontalArrangement = Arrangement.Center) {
         Row(verticalAlignment = CenterVertically, horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(1f)) {
             Image(
                 painter = painterResource(id = R.drawable.ic_heart), modifier = Modifier

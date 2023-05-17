@@ -68,3 +68,10 @@ fun textIconsTint(): Color {
     val lightColor = Color.White
     return if (isSystemInDarkTheme()) lightColor else darkColor
 }
+
+@Composable
+fun searchBarBackgroundColor(): Color {
+    val darkColor = Color(0x94424242)
+    val lightColor = Color(0x94E3E3E3)
+    return if (isSystemInDarkTheme()) darkColor else lightColor
+}
