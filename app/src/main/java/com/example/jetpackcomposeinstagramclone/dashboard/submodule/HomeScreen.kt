@@ -42,6 +42,7 @@ import com.example.jetpackcomposeinstagramclone.model.HighlightsListHolderData
 import com.example.jetpackcomposeinstagramclone.model.PostListHolderData
 import com.example.jetpackcomposeinstagramclone.ui.theme.backgroundColor
 import com.example.jetpackcomposeinstagramclone.ui.theme.textIconsTint
+import com.example.jetpackcomposeinstagramclone.util.ExpandableText
 import com.example.jetpackcomposeinstagramclone.util.HighlightSection
 import com.example.jetpackcomposeinstagramclone.util.RoundImage
 
@@ -246,11 +247,13 @@ fun PostLikeCaptionDetails(modifier: Modifier = Modifier, userName: String) {
             pop()
         }, fontSize = 13.sp, color = textIconsTint())
 
-        Text(text = buildAnnotatedString {
-            pushStyle(boldStyle)
-            append(userName)
-            pop()
-            append(" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-        }, fontSize = 13.sp, color = textIconsTint())
+        ExpandableText(
+            text = " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+                    "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " +
+                    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
+                    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
+                    "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.", maxLines = 1, userName = userName
+        )
     }
 }
