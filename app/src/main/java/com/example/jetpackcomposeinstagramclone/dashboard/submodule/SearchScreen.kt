@@ -81,6 +81,9 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", onSearch: (Strin
                             isHintDisplayed = !it.isFocused
                         }, cursorBrush = SolidColor(textIconsTint())
                     )
+                    if (isHintDisplayed) {
+                        Text(text = hint, color = Color.LightGray, modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
+                    }
                 }
             }
         }
