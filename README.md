@@ -13,9 +13,25 @@ The app fetches data from an API to populate the home page with highlights and p
 
 ## Screenshots
 
-[<img src="/readme/home_page.gif" align="left" width="200" hspace="10" vspace="10">](/readme/home_page.gif)
-[<img src="/readme/user_profile.gif" align="center" width="200" hspace="10" vspace="10">](/readme/user_profile.gif)
-[<img src="/readme/search_other.gif" align="right" width="200" hspace="10" vspace="10">](/readme/search_other.gif)
+<table>
+  <tr>
+    <td align="center">
+      <img src="/readme/home_page.gif" width="200" hspace="10" vspace="10">
+      <br>
+      Home Page
+    </td>
+    <td align="center">
+      <img src="/readme/user_profile.gif" width="200" hspace="10" vspace="10">
+      <br>
+      User Profile
+    </td>
+    <td align="center">
+      <img src="/readme/search_other.gif" width="200" hspace="10" vspace="10">
+      <br>
+      Search
+    </td>
+  </tr>
+</table>
 
 ## Tech Stack
 
