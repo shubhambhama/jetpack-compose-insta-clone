@@ -23,12 +23,12 @@ The app fetches data from an API to populate the home page with highlights and p
     <td align="center">
       <img src="/readme/user_profile.gif" width="200" hspace="10" vspace="10">
       <br>
-      User Profile
+      Search
     </td>
     <td align="center">
       <img src="/readme/search_other.gif" width="200" hspace="10" vspace="10">
       <br>
-      Search
+      User Profile
     </td>
   </tr>
 </table>
