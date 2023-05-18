@@ -47,9 +47,6 @@ To use the app, clone the repository and open the project in Android Studio. Bui
 
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please create an issue or submit a pull request. We appreciate your contributions.
 
-## Project Tutorial
-This project was built using the guidance of a Skillshare tutorial. If you are interested in learning how to build this app step-by-step, you can follow the tutorial on Skillshare.
-
 ## License
 
 >(c) 2023 Shubham Bhama
